@@ -1,7 +1,20 @@
-import React, { useState } from "react";
-import { Input, Spacer, Text, Button, Link, useInput } from "@nextui-org/react";
+import React, { useState, useEffect } from "react";
+import {
+  Input,
+  Spacer,
+  Text,
+  Button,
+  Link,
+  useInput,
+  Loading,
+} from "@nextui-org/react";
 //css
 import "../css/signupPage.css";
+
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import ErrorModal from "../Components/ErrorModal";
+
 //components
 import NameInput from "../Components/NameInput";
 import EmailInput from "../Components/EmailInput";
@@ -26,49 +39,118 @@ const SignupPage = () => {
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
 
+  //modal handlers and states
+  const [visible, setVisible] = useState(false);
+  const handler = () => setVisible(true);
+
+  const closeHandler = () => {
+    setVisible(false);
+    // console.log("closed");
+  };
+
   const [emailStatus, setEmailStatus] = useState(false);
-  const [passwordStatus ,setPasswordStatus]=useState(false);
+  const [passwordStatus, setPasswordStatus] = useState(false);
   const [confirmPasswordStatus, setConfirmPasswordStatus] = useState(false);
-  const [firstNameStatus,setFirstNameStatus]=useState(false);
-  const [lastNameStatus,setLastNameStatus]=useState(false);
-  const [userNameStatus,setUserNameStatus]=useState(false);
+  const [firstNameStatus, setFirstNameStatus] = useState(false);
+  const [lastNameStatus, setLastNameStatus] = useState(false);
+  const [userNameStatus, setUserNameStatus] = useState(false);
 
+  const postData = async (user) => {
+    const response = await axios.post(
+      `http://localhost:5162/ApiGateway/signup`,
+      user
+    );
+    console.log(response);
+  };
 
+  //mutations
+  const mutation = useMutation({
+    mutationFn: postData,
+  });
 
+  useEffect(() => {
+    if(mutation.isError)
+    setVisible(true);
+  }, [mutation.isError]);
   return (
     <div className="container signup-page">
+      <ErrorModal
+        visible={visible}
+        handler={handler}
+        closeHandler={closeHandler}
+        message={
+          "Error occured when trying to sign up check the inputs and  try after some time"
+        }
+      />
       <div className="form p-5">
         <Text h5>{"Sigup"}</Text>
         <Spacer y="2.6" />
         <div className="row">
-            <div className="col">
-        <NameInput valueCallback={setFirstName} label={"first name"} statusCallback={setFirstNameStatus}/>
-        </div>
-        
-        <div className="col">
-        <NameInput valueCallback={setLastName} label={"last name"} statusCallback={setLastNameStatus}/>
-        </div>
+          <div className="col">
+            <NameInput
+              valueCallback={setFirstName}
+              label={"first name"}
+              statusCallback={setFirstNameStatus}
+            />
+          </div>
+          <div className="col">
+            <NameInput
+              valueCallback={setLastName}
+              label={"last name"}
+              statusCallback={setLastNameStatus}
+            />
+          </div>
         </div>
         <Spacer y="2.6" />
-        <NameInput valueCallback={setUsername} label={"user name"} statusCallback={setUserNameStatus}/>
+        <NameInput
+          valueCallback={setUsername}
+          label={"user name"}
+          statusCallback={setUserNameStatus}
+        />
         <Spacer y="2.6" />
         <EmailInput valueCallback={setEmail} statusCallback={setEmailStatus} />
         <Spacer y="2.6" />
-        <PasswordInput valueCallback={setPassword} label={"password"} statusCallback={setPasswordStatus}/>
+        <PasswordInput
+          valueCallback={setPassword}
+          label={"password"}
+          statusCallback={setPasswordStatus}
+        />
         <Spacer y="2.6" />
-        <PasswordInput valueCallback={setConfirmPassword} label={"confirm password"} statusCallback={setConfirmPasswordStatus}/>
+        <PasswordInput
+          valueCallback={setConfirmPassword}
+          label={"confirm password"}
+          statusCallback={setConfirmPasswordStatus}
+        />
         <Spacer y="2.6" />
         <div className="row">
+          {mutation.isLoading ? (
             <div className="col">
-            <Button color="success" auto disabled={!checkAllTrue(emailStatus,passwordStatus,firstNameStatus,lastNameStatus,userNameStatus,confirmPasswordStatus)}>
-            Signup
-          </Button>
+              <Loading />
             </div>
-            <div className="col">
-            <Link color href="/login">
-            {"login"}
+          ) : (
+            <Button
+              color="success"
+              auto
+              disabled={
+                !checkAllTrue(
+                  emailStatus,
+                  passwordStatus,
+                  firstNameStatus,
+                  lastNameStatus,
+                  userNameStatus,
+                  confirmPasswordStatus
+                )
+              }
+              onPress={()=>{
+                mutation.mutate({firstName:firstName,lastName:lastName,username:username,email:email,password:password,roleId:1,createdAt:new Date()})
+            }}
+            >
+              Signup
+            </Button>
+          )}
+          <Link color href="/login">
+            {"already have an account?"}
           </Link>
-            </div>
         </div>
       </div>
     </div>

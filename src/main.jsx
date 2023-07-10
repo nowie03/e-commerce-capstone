@@ -7,7 +7,8 @@ import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 //pages
 import LoginPage from './pages/LoginPage.jsx'
 import SignupPage from './pages/SignupPage.jsx'
-
+//react-query
+import { QueryClient,QueryClientProvider } from '@tanstack/react-query';
 
 const router=createBrowserRouter([{
   path:"/login",
@@ -18,13 +19,16 @@ const router=createBrowserRouter([{
   element :<SignupPage/>
 }]);
 
+const queryClient=new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
     <RouterProvider router={router}>
     <NextUIProvider>
       <App/>
   </NextUIProvider>
     </RouterProvider>
+      </QueryClientProvider>
   </React.StrictMode>,
 )
