@@ -1,0 +1,18 @@
+.login-page{
+    display:  flex;
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.form{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    display:  flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+   padding:20px 50px ;
+    
+}
