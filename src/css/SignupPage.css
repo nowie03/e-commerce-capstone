@@ -1,10 +1,11 @@
-.login-page{
+.signup-page{
     display:  flex;
     flex-direction: column;
     width: 100vw;
     justify-content: center;
     align-items: center;
     margin: 20px;
+
 }
 
 .form{

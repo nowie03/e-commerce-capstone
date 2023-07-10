@@ -1,35 +1,32 @@
-import React, { useEffect } from "react";
+import React ,{useEffect}from "react";
 import { Input,useInput} from "@nextui-org/react";
 
-const EmailInput = ({valueCallback,statusCallback}) => {
+const NameInput = ({valueCallback,label,statusCallback}) => {
     const { value, reset, bindings } = useInput("");
 
     
-    const validateEmail = (value) => {
-        const regex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(value);
+    const validateName = (value) => {
+        return value.length>3;
     };
     
     useEffect(()=>{
-        const isValid = validateEmail(value);
-        statusCallback(isValid);  
+        const isValid=validateName(value)
+        statusCallback(isValid);
         valueCallback(value);
-    },[value]);
-   
+    },[value])
+
     const helper = React.useMemo(() => {
         if (!value)
           return {
             text: "",
             color: "",
           };
-        const isValid = validateEmail(value);
+        const isValid = validateName(value);
         return {
-          text: isValid ? "Correct email" : "Enter a valid email",
+          text: isValid ? `looks good ${value}` : "Enter a valid name",
           color: isValid ? "success" : "error",
         };
       }, [value]);
-
-
   return (
      <Input
     {...bindings}
@@ -41,10 +38,10 @@ const EmailInput = ({valueCallback,statusCallback}) => {
     color={helper.color}
     helperColor={helper.color}
     helperText={helper.text}
-    type="email"
-    labelPlaceholder="Email"
+    labelPlaceholder={label}
+    
     />
     )
 }
 
-export default EmailInput
+export default NameInput

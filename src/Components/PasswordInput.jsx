@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Input,useInput} from "@nextui-org/react";
+import { StepLabel } from "@mui/material";
 
-const PasswordInput = ({valueCallback}) => {
+const PasswordInput = ({valueCallback,label,statusCallback}) => {
     const { value, reset, bindings } = useInput("");
     
-    valueCallback(value);
-
+    
     const validatePassword = (value) => {
-        return true;
-      };
+        return value.length>=4;
+    };
+
+
+    useEffect(()=>{
+        const isValid=validatePassword(value)
+        statusCallback(isValid);
+        valueCallback(value);
+    },[value])
+
 
     const helper = React.useMemo(() => {
         if (!value)
@@ -33,7 +41,7 @@ const PasswordInput = ({valueCallback}) => {
     color={helper.color}
     helperColor={helper.color}
     helperText={helper.text}
-    labelPlaceholder="password"
+    labelPlaceholder={label}
     />
     )
 }
