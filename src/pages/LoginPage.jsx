@@ -1,40 +1,25 @@
-import { React, useState, useEffect } from "react";
-import { Input, Spacer, Text, Button, Link } from "@nextui-org/react";
+import React,{ useState, useEffect, useMemo } from "react";
+import { Input, Spacer, Text, Button, Link ,useInput} from "@nextui-org/react";
 //css
 import "../css/LoginPage.css";
+import EmailInput from "../Components/EmailInput";
+import PasswordInput from "../Components/PasswordInput";
 
 //svgs
 
-
 const LoginPage = () => {
-  //states
+    const [email,setEmail]=useState("");
+    const [password,setPassword]=useState("");
 
   return (
     <div className="container login-page">
       <div className="form ">
-        <Text color="success" h5>{"Login"}</Text>
+        <Text h5>{"Login"}</Text>
+        
         <Spacer y="2.6" />
-        <Input
-            clearable
-            bordered
-            fullWidth
-           
-            size="lg"
-            labelPlaceholder="Email"
-            
-            // contentLeft={<Mail fill="currentColor" />}
-          />
+         <EmailInput valueCallback={setEmail}/>
         <Spacer y="2.6" />
-
-          <Input.Password
-            clearable
-            bordered
-            fullWidth
-           
-            size="lg"
-            labelPlaceholder="Password"
-            // contentLeft={<Password fill="currentColor" />}
-          />
+        <PasswordInput valueCallback={setPassword}/>
         <Spacer y="2.6" />
         <div className="row">
           <Button color="success" auto>
