@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Spacer, Text, Button, Link, Loading } from "@nextui-org/react";
+import { Spacer, Text, Button, Link, Loading ,Grid} from "@nextui-org/react";
 
 //css
 import "../css/LoginPage.css";
-
 //components
 import EmailInput from "../Components/EmailInput";
 import PasswordInput from "../Components/PasswordInput";
@@ -52,7 +51,7 @@ const LoginPage = () => {
   }, [mutation.isError]);
 
   return (
-    <div className="container login-page">
+    <div className=" container login-page">
       <ErrorModal
         visible={visible}
         handler={handler}

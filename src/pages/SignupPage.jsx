@@ -83,7 +83,7 @@ const SignupPage = () => {
         }
       />
       <div className="form p-5">
-        <Text h5>{"Sigup"}</Text>
+        <Text h5>{"Sign up"}</Text>
         <Spacer y="2.6" />
         <div className="row">
           <div className="col">
