@@ -12,8 +12,12 @@ import { checkAllTrue } from "../Utils";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import ErrorModal from "../Components/ErrorModal";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+
+  const navigate=useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -36,13 +40,20 @@ const LoginPage = () => {
       `http://localhost:5162/ApiGateway/login`,
       user
     );
-    console.log(response);
+
+    if(response.status===200)
+      localStorage.setItem('token', response.data.token);
   };
 
   //mutations
   const mutation = useMutation({
     mutationFn: postData,
   });
+
+  useEffect(() => {
+    if(mutation.isSuccess)
+      navigate("/products");
+  },[mutation.isSuccess]);
 
   useEffect(() => {
     if (mutation.isError) {
