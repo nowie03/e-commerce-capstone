@@ -15,7 +15,7 @@ function App() {
 
   const fetchCart=async()=>{
     var response=await axios.get(
-      `http://localhost:5162/ApiGateway/cart?userId=${getUserId()}`,{
+      `http://localhost:5000/ApiGateway/cart?userId=${getUserId()}`,{
       headers:{
         Authorization: localStorage.getItem('token'),
       }

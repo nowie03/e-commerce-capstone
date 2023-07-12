@@ -57,7 +57,7 @@ const SignupPage = () => {
 
   const postData = async (user) => {
     const response = await axios.post(
-      `http://localhost:5162/ApiGateway/signup`,
+      `http://localhost:5000/ApiGateway/signup`,
       user
     );
     console.log(response);

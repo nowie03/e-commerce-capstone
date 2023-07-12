@@ -11,7 +11,7 @@ const CartModal = () => {
     const cartId=useContext(cartContext);
 
     const fetchCartItems=async()=>{
-        var response = await axios.get(`http://localhost:5162/ApiGateway/cart/cartItems?cartId=${cartId}`);
+        var response = await axios.get(`http://localhost:5000/ApiGateway/cart/cartItems?cartId=${cartId}`);
         return response;
     }
 

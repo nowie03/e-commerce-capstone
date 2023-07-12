@@ -22,7 +22,7 @@ const ProductsPage = () => {
 
   const fetchProducts=async()=>{
     var response=await 
-    axios.get(`http://localhost:5162/ApiGateway/products?limit=${limit}&skip=${skip}`,{
+    axios.get(`http://localhost:5000/ApiGateway/products?limit=${limit}&skip=${skip}`,{
     headers:{
       Authorization: localStorage.getItem('token'),
     }})

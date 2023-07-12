@@ -38,7 +38,7 @@ const ProductPage = () => {
  
 
   const fetchProduct=async()=>{
-    var response=await axios.get(`http://localhost:5162/ApiGateway/product?id=${productId}`,{
+    var response=await axios.get(`http://localhost:5000/ApiGateway/product?id=${productId}`,{
     headers:{
       Authorization: localStorage.getItem('token'),
     }
