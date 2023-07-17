@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./index.css";
 import ProductPage from "./pages/ProductPage.jsx";
 import ProductsPage from "./pages/ProductsPage.jsx";
+import CheckoutPage from "./pages/CheckoutPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path:"products/:productId",
         element:<ProductPage/>
+      },
+      {
+        path:"/checkout",
+        element:<CheckoutPage/>
       }
     ]
   },

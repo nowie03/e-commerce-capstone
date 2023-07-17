@@ -20,6 +20,7 @@ import NameInput from "../Components/NameInput";
 import EmailInput from "../Components/EmailInput";
 import PasswordInput from "../Components/PasswordInput";
 import { checkAllTrue } from "../Utils";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   //     "firstName": "string",
@@ -31,6 +32,8 @@ const SignupPage = () => {
   //   "createdAt": "2023-07-10T07:27:33.940Z"
 
   //check if all input fields are valid if yes create user else disable the button
+
+  const navigate=useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -67,6 +70,12 @@ const SignupPage = () => {
   const mutation = useMutation({
     mutationFn: postData,
   });
+
+  useEffect(()=>{
+    if(mutation.isSuccess){
+      navigate('/login')
+    }
+  },[mutation.isSuccess],)
 
   useEffect(() => {
     if(mutation.isError)

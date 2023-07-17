@@ -40,8 +40,8 @@ import { Card, Col, Row, Button, Text, Grid } from "@nextui-org/react";
 const ProductCard = ({product}) => {
   const navigate = useNavigate();
   return (
-    <Grid xs={12} sm={3} key={1} >
-      <Card>
+    <Grid xs={12} sm={6} md={3} key={product.id}>
+      <Card isHoverable>
         <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
           <Col>
             <Text
@@ -57,8 +57,7 @@ const ProductCard = ({product}) => {
         <Card.Body css={{ p: 0 }}>
           <Card.Image
             src={product.images[0].imageUrl}
-            width="100%"
-            height="100%"
+            showSkeleton
             objectFit="cover"
             alt="Card example background"
           />
