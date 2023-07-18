@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import image from "../assets/demo1.jpg";
-import { Image, Text, Button, Grid, Spacer } from "@nextui-org/react";
+import { Image, Text, Button, Grid, Spacer, Loading } from "@nextui-org/react";
 
 import "../css/ProductPage.css";
 import ProductPageCard from "../Components/ProductPageCard";
@@ -122,6 +122,18 @@ const ProductPage = () => {
     }
     })
 
+    const buyNowOrderMutation=useMutation({
+      mutationFn:postOrder,
+      onSuccess:data=>{
+        console.log(data);
+        navigate("/checkout",{
+          state:{
+            orders:[data?.data.id]
+          }
+        })
+      }
+      })
+
 
 
 
@@ -194,20 +206,24 @@ const ProductPage = () => {
           <div className="row w-75 border-bottom p-3 mb-4">
             <div className="col-12 col-lg-6 mb-2">
               <Button shadow color="secondary" auto rounded onPress={()=>{
-                navigate("/checkout")
-              }}>
-                Buy Now
+                buyNowOrderMutation.mutate({
+                  produdtId:productId,
+                  quantity:quantity,
+                  userId:getUserId(),
+                  })
+                }}>
+                 {buyNowOrderMutation.isLoading?<Loading/>:<p>Buy Now </p>}
               </Button>
             </div>
             <div className="col-12 col-lg-6 ">
-              <Button shadow color="warning" auto rounded onPress={()=>{
+              <Button  shadow color="warning" auto rounded onPress={()=>{
                 orderMutation.mutate({
                 produdtId:productId,
                 quantity:quantity,
                 userId:getUserId(),
                 })
               }}>
-                Add To Cart
+               {orderMutation.isLoading?<Loading/>:<p>Add to Cart </p>}
               </Button>
             </div>
           </div>

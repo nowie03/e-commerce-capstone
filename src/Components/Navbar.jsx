@@ -19,12 +19,14 @@ import { useQuery } from "@tanstack/react-query";
 
 import axios from "axios";
 import { getUserId } from "../Utils.js";
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function App() {
 
 
+  const navigate=useNavigate();
 
   const [visible, setVisible] = React.useState(false);
 
@@ -34,6 +36,14 @@ export default function App() {
   const closeHandler = () => {
     setVisible(false);
   };
+
+  const signOutHandler=(key)=>{
+    if(key.actionKey ==='logout'){
+      localStorage.removeItem('token');
+      navigate('/login');
+    }
+  }
+
   const collapseItems = ["Cart", "Log Out"];
 
   
@@ -91,7 +101,7 @@ export default function App() {
             <Dropdown.Menu
               aria-label="User menu actions"
               color="secondary"
-              onAction={(actionKey) => console.log({ actionKey })}
+              onAction={(actionKey) => signOutHandler({ actionKey })}
             >
               <Dropdown.Item key="profile" css={{ height: "$18" }}>
                 <Text b color="inherit" css={{ d: "flex" }}>
@@ -102,7 +112,7 @@ export default function App() {
                 </Text>
               </Dropdown.Item>
 
-              <Dropdown.Item key="logout" withDivider color="error">
+              <Dropdown.Item key="logout" withDivider color="error" >
                 Log Out
               </Dropdown.Item>
             </Dropdown.Menu>

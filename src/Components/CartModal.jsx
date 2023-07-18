@@ -90,7 +90,12 @@ const CartModal = ({visible,handler,closeHandler}) => {
           <Grid.Container gap={4} >
             <Grid xs={12} md={6}>
           <Button flat color='success' size="sm" onPress={()=>{
-            navigate('/checkout')
+            navigate('/checkout',{
+              state:{
+                orders:cartItemsQuery.data?.data.map(cartItem=>(cartItem.orderId))
+              }
+            })
+            closeHandler()
           }}>
             Checkout
           </Button>
